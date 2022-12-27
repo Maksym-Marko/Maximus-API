@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
-
+import Auth from '@/services/Auth'
 
 const routes = [
   {
@@ -118,6 +118,7 @@ const router = createRouter( {
 router.beforeEach( (to, from, next) => {
 
   const token = store.getters['user/getToken']
+  const user = store.getters['user/getUser']
   const reqAuth = to.meta.requiresAuth
   const reqGuest = to.meta.requiresGuest
 
@@ -125,7 +126,7 @@ router.beforeEach( (to, from, next) => {
 
     next( { name: 'Login' } )
 
-  } else if( token && reqGuest ) {
+  } else if( token && reqGuest ) {    
 
     next( { name: 'Dashboard' } )
 
@@ -135,6 +136,9 @@ router.beforeEach( (to, from, next) => {
     next()
     
   }
+
+  // Get user data if auth
+  if( token && ! user ) Auth.getUser()
 
 } )
 

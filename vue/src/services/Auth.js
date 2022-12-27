@@ -44,6 +44,23 @@ const Auth = {
 
             } )
 
+    },
+    getUser() {
+
+        API.get( '/user' )
+            .then( res => {
+
+                if(res.status === 200 ) {
+
+                    store.commit( {
+                        type: 'user/SET_USER_IF_AUTH',
+                        user: res.data
+                    } )
+
+                }
+
+            } )
+
     }
 }
 

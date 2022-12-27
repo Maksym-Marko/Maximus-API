@@ -9,6 +9,10 @@ const user = {
     getUser: state => state.user,
   },
   mutations: {
+    SET_USER_IF_AUTH: ( state, payload ) => {
+      const {user} = payload
+      state.user = user
+    },
     SET_USER: ( state, payload ) => {
       const {token, user} = payload
       state.token = token
