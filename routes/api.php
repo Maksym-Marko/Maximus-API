@@ -24,6 +24,7 @@ Route::get( '/test-route', function() {
 Route::middleware('guest')->group(function () {
     
     Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+    Route::post('/register', [RegisteredUserController::class, 'store']);
 
 } );
 

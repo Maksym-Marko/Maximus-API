@@ -3,6 +3,39 @@ import API from '@/services/API'
 import store from '@/store'
 
 const Auth = {
+    register( payload ) {
+
+        if( store.getters['user/getToken'] ) return
+
+        const { name, email, password, password_confirmation } = payload
+
+        API.post( '/register', {
+            name,
+            email,
+            password,
+            password_confirmation
+        } ).then( res => {
+
+            if( res && res.status === 200 ) {
+
+                store.commit( {
+                    type: 'user/SET_USER',
+                    token: res.data.token,
+                    user: res.data.user
+                } )
+
+                store.commit( {
+                    type: 'notify/SET_MESSAGES',
+                    messages: ['Registration is successful!']
+                } )
+
+                router.push( {name: 'Dashboard'} )
+
+            }
+
+        } )
+
+    },
     login( payload ) {
 
         if( store.getters['user/getToken'] ) return
@@ -21,6 +54,12 @@ const Auth = {
                     token: res.data.token,
                     user: res.data.user
                 } )
+
+                store.commit( {
+                    type: 'notify/SET_MESSAGES',
+                    messages: ['Login is successful!']
+                } )
+
                 router.push( {name: 'Dashboard'} )
 
             }

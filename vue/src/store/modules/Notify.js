@@ -2,7 +2,7 @@ const notify = {
     namespaced: true,
     state: {
         messages: [],
-        errors: [],
+        errors: {},
         mI: null,
         eI: null
     },
@@ -13,23 +13,17 @@ const notify = {
     mutations: {
         SET_ERRORS: ( state, payload ) => {
             const {errors} = payload
-            state.errors = [
-                ...state.errors,
-                ...errors
-            ]
+            state.errors = errors
 
             clearTimeout( state.eI )
 
             state.eI = setTimeout( () => {
-                state.errors = []
+                state.errors = {}
             }, 3000 )
         },
         SET_MESSAGES: ( state, payload ) => {
             const {messages} = payload
-            state.messages = [
-                ...state.messages,
-                ...messages
-            ]
+            state.messages = messages
 
             clearTimeout( state.mI )
 

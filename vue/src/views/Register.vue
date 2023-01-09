@@ -1,14 +1,12 @@
 <template>
-  <div class="max-w-sm p-5 m-auto">
-    <h2 class="mb-4 text-xl font-bold text-center">Register</h2>
-    <RegisterForm class="p-5 bg-white border rounded shadow" />
+  <div>
+    <h2>Register</h2>
+    <RegistrationForm />
   </div>
 </template>
 
 <script setup>
-  import RegisterForm from "@/components/RegisterForm.vue";
-  import axios from 'axios'
-  import {onMounted} from 'vue'
+  import RegistrationForm from '@/components/RegistrationForm.vue'
 
   
 </script>

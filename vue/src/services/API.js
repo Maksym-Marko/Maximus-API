@@ -19,23 +19,20 @@ API.interceptors.response.use(
     return response
   },
   function (error) {
+
+    console.log(error)
     
     if ( error.response ) {
 
-      if(error.response.status === 422) {
+      let _errors = typeof error.response.data.error !== 'undefined' ? {"error": [error.response.data.error]} : error.response.data.errors
+
+      store.commit( {
+        type: 'notify/SET_ERRORS',
+        errors: _errors
+      } )
+
+      if( error.response.status !== 422 ) {
         
-        store.commit( {
-          type: 'notify/SET_ERRORS',
-          errors: ['The Provided credentials are not correct']
-        } )
-
-      } else {
-
-        store.commit( {
-          type: 'notify/SET_ERRORS',
-          errors: [error.response.data.message]
-        } )
-
         // logout 
         store.commit( 'user/DESTROY_USER' )
         router.push( {name: 'Login'} )

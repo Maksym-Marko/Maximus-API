@@ -23,6 +23,7 @@ class AuthenticatedSessionController extends Controller
             ],
             'remember' => 'boolean'
         ]);
+
         $remember = $credentials['remember'] ?? false;
         unset($credentials['remember']);
 
@@ -31,6 +32,7 @@ class AuthenticatedSessionController extends Controller
                 'error' => 'The Provided credentials are not correct'
             ], 422);
         }
+        
         $user = Auth::user();
         $token = $user->createToken('basic-token', ['none'])->plainTextToken;
 
