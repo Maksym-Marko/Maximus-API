@@ -1,8 +1,66 @@
 import router from '@/router'
 import API from '@/services/API'
 import store from '@/store'
+import emailVerification from '@/services/emailVerification.js'
 
 const Auth = {
+    emailVerificationCheck( payload ) {
+
+        const { id, hash } = payload
+
+        API.post( '/send-email-verification-check', {
+            id,
+            hash
+        } )
+            .then( res => {
+
+                if(res.data?.message === 'success') {
+
+                    store.commit( {
+                        type: 'notify/SET_MESSAGES',
+                        message: 'Your email has been verified successfully!'
+                    } )
+
+                    store.commit( {
+                        type: 'user/SET_VERIFIED' ,
+                        emailVerifiedAt: res.data.verified_at
+                    } )
+
+                    router.push( {name: 'Dashboard'} )
+
+                } else {
+
+                    router.push( {name: 'VerifyEmail'} )
+
+                }
+
+            } )
+
+    },
+    emailVerificationSend() {
+
+        if( import.meta.env.VITE_EMAIL_VERIFICATION !== 'true' ) return
+
+        API.post( '/send-email-verification-url', {
+            verificationUrl: import.meta.env.VITE_EMAIL_VERIFICATION_BASE_URL
+        } )
+            .then( res => {
+
+                if(res.data === 'success') {
+
+                    store.commit( {
+                        type: 'notify/SET_MESSAGES',
+                        message: 'Verification email sent successfully!'
+                    } )
+
+                }
+
+                if(res.data === 'verified') {
+                    router.go()
+                }
+
+            } )
+    },
     register( payload ) {
 
         if( store.getters['user/getToken'] ) return
@@ -26,10 +84,14 @@ const Auth = {
 
                 store.commit( {
                     type: 'notify/SET_MESSAGES',
-                    messages: ['Registration is successful!']
+                    message: 'Registration is successful!'
                 } )
 
-                router.push( {name: 'Dashboard'} )
+                // Send Verification email
+                this.emailVerificationSend()
+
+                // redirect to verification email page
+                router.push( {name: 'VerifyEmail'} )
 
             }
 
@@ -57,10 +119,18 @@ const Auth = {
 
                 store.commit( {
                     type: 'notify/SET_MESSAGES',
-                    messages: ['Login is successful!']
+                    message: 'Login is successful!'
                 } )
 
-                router.push( {name: 'Dashboard'} )
+                if( emailVerification() ) {
+
+                    router.push( {name: 'Dashboard'} )
+
+                } else {
+
+                    router.push( {name: 'VerifyEmail'} )
+
+                }        
 
             }
 
@@ -86,19 +156,25 @@ const Auth = {
     },
     getUser() {
 
-        API.get( '/user' )
-            .then( res => {
+        return new Promise( ( resolve, reject ) => {
 
-                if(res.status === 200 ) {
+            API.get( '/user' )
+                .then( res => {
 
-                    store.commit( {
-                        type: 'user/SET_USER_IF_AUTH',
-                        user: res.data
-                    } )
+                    if(res.status === 200 ) {
 
-                }
+                        store.commit( {
+                            type: 'user/SET_USER_IF_AUTH',
+                            user: res.data.data
+                        } )
 
-            } )
+                        resolve()
+
+                    }
+
+                } )
+
+        } )
 
     }
 }

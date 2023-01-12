@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+// use App\Mail\VerificationMail;
+// use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Route::get( '/mail-test', function() {
+//     Mail::to( 'email2@localhost' )
+//         ->send( new VerificationMail( [
+//             'url' => 'http://127.0.0.1:8000/f(#5ht89wa8hf'
+//         ] ) );
+//     return new VerificationMail( [
+//         'url' => 'http://127.0.0.1:8000/f(#5ht89wa8hf'
+//     ] );
+// } );
 
 Route::get('/', function () {
     return view('welcome');

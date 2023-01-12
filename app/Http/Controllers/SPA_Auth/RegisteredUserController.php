@@ -4,12 +4,12 @@ namespace App\Http\Controllers\SPA_Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Http\Resources\V1\UserResource;
 
 class RegisteredUserController extends Controller
 {
@@ -28,14 +28,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 
         $token = $user->createToken('basic-token', ['none'])->plainTextToken;
 
         return response([
-            'user' => $user,
+            'user' => new UserResource( $user ),
             'token' => $token
         ]);
     }

@@ -22,9 +22,10 @@ const notify = {
             }, 3000 )
         },
         SET_MESSAGES: ( state, payload ) => {
-            const {messages} = payload
-            state.messages = messages
-
+            const {message} = payload
+            
+            state.messages.push( message )
+            
             clearTimeout( state.mI )
 
             state.mI = setTimeout( () => {

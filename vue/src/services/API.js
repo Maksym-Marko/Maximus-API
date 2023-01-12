@@ -26,6 +26,10 @@ API.interceptors.response.use(
 
       let _errors = typeof error.response.data.error !== 'undefined' ? {"error": [error.response.data.error]} : error.response.data.errors
 
+      if( typeof _errors === 'undefined' ) {
+        _errors = {"error": ['Server error']} 
+      }
+
       store.commit( {
         type: 'notify/SET_ERRORS',
         errors: _errors

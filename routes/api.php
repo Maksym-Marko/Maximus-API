@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SPA_Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SPA_Auth\RegisteredUserController;
+use App\Http\Controllers\API\V1\UserController;
+use App\Http\Controllers\API\V1\EmailVerificationController;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +19,12 @@ use App\Http\Controllers\SPA_Auth\RegisteredUserController;
 |
 */
 
-Route::get( '/test-route', function() {
-    return 'test';
-} );
+// Route::get( '/test-route', function() {
+//     return [
+//         'hash' => Hash::make( 'test@mail.com' ),
+//         'check' => Hash::check( 'test@mail.com', '$2y$10$hKBXpo1rYd61lghiu7mdY.6zxCu6RjdnGpJk6y6ftFo1zvDbBiSsq' )
+//     ];
+// } );
 
 // guest
 Route::middleware('guest')->group(function () {
@@ -32,11 +38,22 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
 
     // Get Auth User
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'show']);
 
     // Logout
     Route::post('/logout', [AuthenticatedSessionController::class, 'logout']);
 
+    // Email Verification send
+    Route::post('/send-email-verification-url', [EmailVerificationController::class, 'send']);
+
 });
+
+// Auth and Verified
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
+    // ...
+
+} );
+
+// Email Verification check
+Route::post('/send-email-verification-check', [EmailVerificationController::class, 'check']);
