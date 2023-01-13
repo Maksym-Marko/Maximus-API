@@ -1,57 +1,16 @@
 <template>
-  <div class="max-w-sm p-5 m-auto">
-    <h2 class="mb-4 text-xl font-bold text-center">Forgot Password</h2>
-    <form
-      @submit.prevent="forgotPassword"
-      class="p-5 bg-white border rounded shadow"
-    >
-      <BaseInput
-        type="email"
-        label="Email"
-        name="email"
-        v-model="email"
-        autocomplete="email"
-        placeholder="luke@jedi.com"
-        class="mb-4"
-      />
-      <BaseBtn type="submit" text="Send" />
-    </form>
-    <FlashMessage :message="message" :error="error" />
-  </div>
+
+    <h2>Forgot Password</h2>
+
+    <p>
+      Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+    </p>
+
+    <ForgotPasswordForm />
+    
 </template>
 
-<script>
-import { getError } from "@/utils/helpers";
-import BaseBtn from "@/components/BaseBtn.vue";
-import BaseInput from "@/components/BaseInput.vue";
-import AuthService from "@/services/AuthService";
-import FlashMessage from "@/components/FlashMessage.vue";
+<script setup>
+  import ForgotPasswordForm from "@/components/ForgotPasswordForm.vue";
 
-export default {
-  name: "ForgotPassword",
-  components: {
-    BaseBtn,
-    BaseInput,
-    FlashMessage,
-  },
-  data() {
-    return {
-      email: null,
-      error: null,
-      message: null,
-    };
-  },
-  methods: {
-    forgotPassword() {
-      this.error = null;
-      this.message = null;
-      const payload = {
-        email: this.email,
-      };
-      AuthService.forgotPassword(payload)
-        .then(() => (this.message = "Reset password email sent."))
-        .catch((error) => (this.error = getError(error)));
-    },
-  },
-};
 </script>

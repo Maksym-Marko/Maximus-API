@@ -4,13 +4,61 @@ import store from '@/store'
 import emailVerification from '@/services/emailVerification.js'
 
 const Auth = {
+    forgotPasswordCheck( payload ) {
+
+        const { email, password, password_confirmation, token } = payload
+
+        API.post( '/reset-password', {
+            email,
+            password,
+            password_confirmation,
+            token,
+        } )
+            .then( res => {
+                
+                if(res.data === 'success') {
+
+                    store.commit( {
+                        type: 'notify/SET_MESSAGES',
+                        message: 'Password reset successfully!',
+                    } )
+
+                    router.push( {name: 'Login'} )
+
+                }
+
+            } )
+
+    },
+    forgotPasswordSend( payload ) {
+
+        const { email } = payload
+
+        API.post( '/forgot-password', {
+            email,
+            forgotPasswordUrl: import.meta.env.VITE_RESET_PASSWORD_BASE_URL,
+        } )
+            .then( res => {
+
+                if(res.data === 'success') {
+
+                    store.commit( {
+                        type: 'notify/SET_MESSAGES',
+                        message: 'Reset Password email sent successfully!',
+                    } )
+
+                }
+
+            } )
+        
+    },
     emailVerificationCheck( payload ) {
 
         const { id, hash } = payload
 
         API.post( '/send-email-verification-check', {
             id,
-            hash
+            hash,
         } )
             .then( res => {
 
@@ -18,12 +66,12 @@ const Auth = {
 
                     store.commit( {
                         type: 'notify/SET_MESSAGES',
-                        message: 'Your email has been verified successfully!'
+                        message: 'Your email has been verified successfully!',
                     } )
 
                     store.commit( {
                         type: 'user/SET_VERIFIED' ,
-                        emailVerifiedAt: res.data.verified_at
+                        emailVerifiedAt: res.data.verified_at,
                     } )
 
                     router.push( {name: 'Dashboard'} )
@@ -42,7 +90,7 @@ const Auth = {
         if( import.meta.env.VITE_EMAIL_VERIFICATION !== 'true' ) return
 
         API.post( '/send-email-verification-url', {
-            verificationUrl: import.meta.env.VITE_EMAIL_VERIFICATION_BASE_URL
+            verificationUrl: import.meta.env.VITE_EMAIL_VERIFICATION_BASE_URL,
         } )
             .then( res => {
 
@@ -50,7 +98,7 @@ const Auth = {
 
                     store.commit( {
                         type: 'notify/SET_MESSAGES',
-                        message: 'Verification email sent successfully!'
+                        message: 'Verification email sent successfully!',
                     } )
 
                 }
@@ -71,7 +119,7 @@ const Auth = {
             name,
             email,
             password,
-            password_confirmation
+            password_confirmation,
         } ).then( res => {
 
             if( res && res.status === 200 ) {
@@ -79,12 +127,12 @@ const Auth = {
                 store.commit( {
                     type: 'user/SET_USER',
                     token: res.data.token,
-                    user: res.data.user
+                    user: res.data.user,
                 } )
 
                 store.commit( {
                     type: 'notify/SET_MESSAGES',
-                    message: 'Registration is successful!'
+                    message: 'Registration is successful!',
                 } )
 
                 // Send Verification email
@@ -106,7 +154,7 @@ const Auth = {
 
         API.post( '/login', {
             email,
-            password
+            password,
         } ).then( res => {
 
             if( res && res.status === 200 ) {
@@ -114,12 +162,12 @@ const Auth = {
                 store.commit( {
                     type: 'user/SET_USER',
                     token: res.data.token,
-                    user: res.data.user
+                    user: res.data.user,
                 } )
 
                 store.commit( {
                     type: 'notify/SET_MESSAGES',
-                    message: 'Login is successful!'
+                    message: 'Login is successful!',
                 } )
 
                 if( emailVerification() ) {
@@ -165,7 +213,7 @@ const Auth = {
 
                         store.commit( {
                             type: 'user/SET_USER_IF_AUTH',
-                            user: res.data.data
+                            user: res.data.data,
                         } )
 
                         resolve()

@@ -83,21 +83,6 @@
             errors.value.push( 'Password and Password confirmation do NOT match' )
         }
 
-        // return
-        // if(
-        //     ! formData.value.name ||
-        //     ! formData.value.email ||
-        //     ! formData.value.password ||
-        //     ! formData.value.password_confirmation ||
-        //     (
-        //         formData.value.password && 
-        //         formData.value.password_confirmation &&
-        //         formData.value.password !== formData.value.password_confirmation
-        //     )
-        // ) {
-        //     return
-        // }
-
         Auth.register( formData.value )
 
     }

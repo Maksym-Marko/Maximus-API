@@ -1,80 +1,83 @@
 <template>
-  <div class="max-w-sm p-5 m-auto">
-    <h2 class="mb-4 text-xl font-bold text-center">Reset Password</h2>
+    <h2>Reset Password</h2>
     <form
       @submit.prevent="resetPassword"
-      class="p-5 bg-white border rounded shadow"
     >
-      <div class="mb-2">
-        <label for="email" class="text-sm text-gray-500">Email</label>
+      <div>
+        <label for="email">Your account Email</label>
         <input
           type="email"
           id="email"
-          v-model="email"
-          class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          v-model="formData.email"
+          :class="[errors.length>0 && !formData.email ? 'empty-field' : '']"
         />
       </div>
-      <div class="mb-2">
-        <label for="password" class="text-sm text-gray-500">Password</label>
+      <div>
+        <label for="password">New Password</label>
         <input
           type="password"
           id="password"
-          v-model="password"
-          class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          v-model="formData.password"
+          :class="[errors.length>0 && !formData.password ? 'empty-field' : '']"
         />
       </div>
-      <div class="mb-4">
-        <label for="password-confirm" class="text-sm text-gray-500"
+      <div>
+        <label for="password-confirm"
           >Confirm Password</label
         >
         <input
           type="password"
           id="password-confirm"
-          v-model="passwordConfirm"
-          class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          v-model="formData.password_confirmation"
+          :class="[errors.length>0 && !formData.password_confirmation ? 'empty-field' : '']"
         />
       </div>
-      <BaseBtn type="submit" text="Reset Password" />
+      <button type="submit">Reset Password</button>
     </form>
-    <FlashMessage :message="message" :error="error" />
-  </div>
 </template>
 
-<script>
-import { getError } from "@/utils/helpers";
-import BaseBtn from "@/components/BaseBtn.vue";
-import AuthService from "@/services/AuthService";
-import FlashMessage from "@/components/FlashMessage.vue";
+<script setup>
+  import { onMounted, ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import store from '@/store'
+  import Auth from '@/services/Auth'
 
-export default {
-  name: "ResetPassword",
-  components: {
-    BaseBtn,
-    FlashMessage,
-  },
-  data() {
-    return {
-      email: null,
-      password: null,
-      passwordConfirm: null,
-      error: null,
-      message: null,
-    };
-  },
-  methods: {
-    resetPassword() {
-      this.error = null;
-      this.message = null;
-      const payload = {
-        email: this.email,
-        password: this.password,
-        password_confirmation: this.passwordConfirm,
-        token: this.$route.query.token,
-      };
-      AuthService.resetPassword(payload)
-        .then(() => (this.message = "Password reset."))
-        .catch((error) => (this.error = getError(error)));
-    },
-  },
-};
+  const router = useRouter()
+  const route = useRoute()
+
+  const formData = ref( {
+    email: null,
+    password: null,
+    password_confirmation: null
+  } )
+
+  const errors = ref( [] )
+
+  const resetPassword = () => {
+
+    if( ! formData.value.email ) errors.value.push( 'Fill in email' )
+    if( ! formData.value.password ) errors.value.push( 'Fill in password' )
+    if( ! formData.value.password_confirmation ) errors.value.push( 'Confirm your password' )
+
+    if( ! formData.value.email || ! formData.value.password || ! formData.value.password_confirmation ) return
+
+    Auth.forgotPasswordCheck( {
+      email: formData.value.email,
+      password: formData.value.password,
+      password_confirmation: formData.value.password_confirmation,
+      token: route.query.token,
+    } )
+    
+  }
+
+  onMounted( () => {
+
+    if( typeof route.query.token === 'undefined' ) {
+
+      router.push( { name: 'notFound' } )
+
+    }
+
+  } )
+
 </script>

@@ -6,7 +6,8 @@ use App\Http\Controllers\SPA_Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SPA_Auth\RegisteredUserController;
 use App\Http\Controllers\API\V1\UserController;
 use App\Http\Controllers\API\V1\EmailVerificationController;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\API\V1\ForgotPasswordController;
+// use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,13 @@ use Illuminate\Support\Facades\Hash;
 // guest
 Route::middleware('guest')->group(function () {
     
+    // Login/Registration
     Route::post('/login', [AuthenticatedSessionController::class, 'login']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
+
+    // Forgo/Reset Password
+    Route::post( '/forgot-password', [ForgotPasswordController::class, 'send'] );
+    Route::post( '/reset-password', [ForgotPasswordController::class, 'reset'] );
 
 } );
 

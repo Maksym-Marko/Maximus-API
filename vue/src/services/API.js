@@ -19,15 +19,23 @@ API.interceptors.response.use(
     return response
   },
   function (error) {
-
-    console.log(error)
     
     if ( error.response ) {
 
       let _errors = typeof error.response.data.error !== 'undefined' ? {"error": [error.response.data.error]} : error.response.data.errors
-
+      
       if( typeof _errors === 'undefined' ) {
-        _errors = {"error": ['Server error']} 
+
+        if(typeof error.response.data.message !== 'undefined' ) {
+
+          _errors = {"error": [error.response.data.message]}
+
+        } else {
+
+          _errors = {"error": ['Server error']} 
+
+        }
+        
       }
 
       store.commit( {

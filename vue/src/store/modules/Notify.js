@@ -19,7 +19,7 @@ const notify = {
 
             state.eI = setTimeout( () => {
                 state.errors = {}
-            }, 3000 )
+            }, 6000 )
         },
         SET_MESSAGES: ( state, payload ) => {
             const {message} = payload
@@ -30,7 +30,7 @@ const notify = {
 
             state.mI = setTimeout( () => {
                 state.messages = []
-            }, 3000 )
+            }, 6000 )
         }
     }
 }

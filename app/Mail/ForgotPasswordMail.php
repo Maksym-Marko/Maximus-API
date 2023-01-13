@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerificationMail extends Mailable
+class ForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,7 +33,7 @@ class VerificationMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Verification Mail',
+            subject: 'Reset Password Notification',
         );
     }
 
@@ -45,7 +45,7 @@ class VerificationMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.verification',
+            markdown: 'emails.forgot-password',
             with: ['url'],
         );
     }

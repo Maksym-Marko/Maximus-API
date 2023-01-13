@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\VerificationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Auth\Events\Verified;
+// use Illuminate\Auth\Events\Verified;
 
 class EmailVerificationController extends Controller
 {

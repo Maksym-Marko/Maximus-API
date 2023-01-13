@@ -5,19 +5,18 @@
     <input 
       type="email"
       v-model="formData.email"
+      :class="[errors.length>0 && !formData.email ? 'empty-field' : '']"
     />
 
     <input 
       type="password"
       v-model="formData.password"
+      :class="[errors.length>0 && !formData.password ? 'empty-field' : '']"
     />
     
     <div>
-      <button type="submit">Login</button>
 
-      <!-- <router-link to="/forgot-password"> -->
-        Forgot your password?
-      <!-- </router-link> -->
+      <button type="submit">Login</button>
 
     </div>
 
@@ -26,7 +25,6 @@
 </template>
 
 <script setup>
-
   import { ref } from 'vue'
   import Auth from '@/services/Auth'
 

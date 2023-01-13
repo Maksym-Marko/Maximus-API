@@ -16,13 +16,23 @@ const routes = [
       {
         path: '/login',
         name: 'Login',
-        component: () => import( '@/views/Login.vue' )
+        component: () => import( '@/views/Login.vue' ),
       },
       {
         path: '/register',
         name: 'Register',
-        component: () => import( '@/views/Register.vue' )
-      },      
+        component: () => import( '@/views/Register.vue' ),
+      },
+      {
+        path: "/forgot-password",
+        name: "ForgotPassword",
+        component: () => import( '@/views/ForgotPassword.vue' ),
+      },
+      {
+        path: "/reset-password",
+        name: "ResetPassword",
+        component: () => import( '@/views/ResetPassword.vue' ),
+      },
     ]
   },
 
@@ -37,12 +47,12 @@ const routes = [
         meta: {
           requiresAuth: true,
         },
-        component: () => import('@/views/VerifyEmail.vue')
+        component: () => import('@/views/VerifyEmail.vue'),
       },
       {
         path: '/verify-email-check',
         name: 'VerifyEmailCheck',
-        component: () => import('@/views/VerifyEmailCheck.vue')
+        component: () => import('@/views/VerifyEmailCheck.vue'),
       }
     ]
   },
@@ -73,65 +83,21 @@ const routes = [
       {
         path: '/',
         name: 'Home',
-        component: () => import( '@/views/Home.vue' )
+        component: () => import( '@/views/Home.vue' ),
       },
       {
         path: '/about',
         name: 'About',
-        component: () => import( '@/views/About.vue' )
+        component: () => import( '@/views/About.vue' ),
       },
       { 
         path: '/:pathMatch(.*)*',
         name: 'notFound',
-        component: () => import( '@/views/notFound.vue' ),
+        component: () => import( '@/views/NotFound.vue' ),
       }    
     ]
   },
     
-
-    // {
-    //   path: "/dashboard",
-    //   name: "dashboard",
-    //   meta: { requiresAuth: true },
-    //   component: () =>
-    //     import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard.vue"),
-    // },
-
-    // {
-    //   path: "/users",
-    //   name: "users",
-    //   meta: { requiresAuth: true },
-    //   component: () => import(/* webpackChunkName: "users" */ "@/views/Users.vue"),
-    //   beforeEnter: (to, from, next) => {
-    //     if (store.getters["auth/isAdmin"]) next();
-    //     else next(false);
-    //   },
-    // },
-    // {
-    //   path: "/login",
-    //   name: "login",
-    //   component: () => import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
-    // },
-    // {
-    //   path: "/register",
-    //   name: "register",
-    //   component: () =>
-    //     import(/* webpackChunkName: "register" */ "@/views/Register.vue"),
-    // },
-    // {
-    //   path: "/reset-password",
-    //   name: "ResetPassword",
-    //   component: () =>
-    //     import(/* webpackChunkName: "reset-password" */ "@/views/ResetPassword.vue"),
-    // },
-    // {
-    //   path: "/forgot-password",
-    //   name: "ForgotPassword",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "forgot-password" */ "@/views/ForgotPassword.vue"
-    //     ),
-    // }
 ]
 
 const router = createRouter( {
