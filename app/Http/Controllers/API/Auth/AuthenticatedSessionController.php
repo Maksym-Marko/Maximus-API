@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SPA_Auth;
+namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

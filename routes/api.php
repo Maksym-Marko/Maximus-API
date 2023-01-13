@@ -1,13 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SPA_Auth\AuthenticatedSessionController;
-use App\Http\Controllers\SPA_Auth\RegisteredUserController;
+use App\Http\Controllers\API\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\API\Auth\RegisteredUserController;
 use App\Http\Controllers\API\V1\UserController;
 use App\Http\Controllers\API\V1\EmailVerificationController;
 use App\Http\Controllers\API\V1\ForgotPasswordController;
-// use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +17,6 @@ use App\Http\Controllers\API\V1\ForgotPasswordController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::get( '/test-route', function() {
-//     return [
-//         'hash' => Hash::make( 'test@mail.com' ),
-//         'check' => Hash::check( 'test@mail.com', '$2y$10$hKBXpo1rYd61lghiu7mdY.6zxCu6RjdnGpJk6y6ftFo1zvDbBiSsq' )
-//     ];
-// } );
 
 // guest
 Route::middleware('guest')->group(function () {
@@ -54,12 +45,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
+// Email Verification check
+Route::post('/send-email-verification-check', [EmailVerificationController::class, 'check']);
+
 // Auth and Verified
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     
     // ...
 
 } );
-
-// Email Verification check
-Route::post('/send-email-verification-check', [EmailVerificationController::class, 'check']);
