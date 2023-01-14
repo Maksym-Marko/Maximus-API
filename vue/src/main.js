@@ -4,8 +4,7 @@ import router from '@/router'
 import store from '@/store'
 import '@/assets/css/main.css'
 import '@/assets/css/main.css'
-// import '/dist/output.css'
-// npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+import '/dist/output.css'
 
 createApp(App)
     .use(store)

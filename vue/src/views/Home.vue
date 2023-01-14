@@ -1,18 +1,5 @@
 <template>
-  Home
+  
+  <h1 class="text-3xl font-bold tracking-tight text-gray-900">Home</h1>
+
 </template>
-
-<script setup>
-  // import API from '@/services/API'
-  // import { onMounted } from 'vue';
-
-  // const someFunc = ( res ) => {
-  //   console.log( 'set', res )
-  // }
-
-  // onMounted( async () => {    
-
-  //   API( 'get', '/test-route', null, someFunc )
-
-  // } )
-</script>

@@ -19,6 +19,11 @@ API.interceptors.response.use(
     return response
   },
   function (error) {
+
+    store.commit( {
+      type: 'system/SET_ATTEMPT',
+      attempt: false
+    } )
     
     if ( error.response ) {
 

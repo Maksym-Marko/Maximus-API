@@ -12,12 +12,7 @@
       <p 
         v-if="messages"
         v-for="message in messages"
-        :style="{
-          color: 'green',
-          border: '2px solid green',
-          borderRadius: '8px',
-          padding: '10px'
-        }"
+        class="fixed p-5 bg-green-200 rounded bottom-2 right-2 max-w-xs text-green-900"
       >
         {{ message }}
       </p>
@@ -25,12 +20,7 @@
       <p 
         v-if="Object.keys( errors ).length>0" 
         v-for="error in errors"
-        :style="{
-          color: 'red',
-          border: '2px solid red',
-          borderRadius: '8px',
-          padding: '10px'
-        }"
+        class="fixed p-5 bg-red-200 rounded bottom-2 right-2 max-w-xs text-red-900"
       >
         {{ error[0] }}
       </p>

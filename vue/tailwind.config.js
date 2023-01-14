@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+// npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 module.exports = {
   content: ["./src/**/*.{html,js,vue}"],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }

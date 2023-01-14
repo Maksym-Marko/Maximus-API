@@ -1,10 +1,14 @@
 <template>
 
-    <div class="DefaultLayout">
-        <Navigation />
-        <br>
+    <Navigation />
+   
+    <main>
+      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        
         <router-view />
-    </div>
+
+      </div>
+    </main>    
 
     <FlashMessage />
     
@@ -12,5 +16,5 @@
 
 <script setup>
     import Navigation from '@/components/Navigation.vue'
-    import FlashMessage from '@/components/FlashMessage.vue'    
+    import FlashMessage from '@/components/FlashMessage.vue'
 </script>

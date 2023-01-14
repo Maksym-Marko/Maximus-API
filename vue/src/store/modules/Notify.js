@@ -4,7 +4,7 @@ const notify = {
         messages: [],
         errors: {},
         mI: null,
-        eI: null
+        eI: null,
     },
     getters: {
         getMessages: state => state.messages,
@@ -32,7 +32,7 @@ const notify = {
                 state.messages = []
             }, 6000 )
         }
-    }
+    },
 }
   
 export default notify

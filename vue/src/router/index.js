@@ -74,6 +74,16 @@ const routes = [
       }      
     ]
   },
+
+  {
+    path: '/logout',
+    name: 'Logout',
+    beforeEnter: (to, from) => {
+      Auth.logout()
+      return false
+    },
+    component: () => import( '@/views/Login.vue' ),
+  },
   
   // Common pages
   {
@@ -158,7 +168,13 @@ router.beforeEach( (to, from, next) => {
 
     next( _next )
 
-  }  
+  }
+
+  // Reset attempt
+  store.commit( {
+    type: 'system/SET_ATTEMPT',
+    attempt: false
+  } )
 
 } )
 

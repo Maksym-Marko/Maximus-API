@@ -72,7 +72,7 @@ const Auth = {
                     store.commit( {
                         type: 'user/SET_VERIFIED' ,
                         emailVerifiedAt: res.data.verified_at,
-                    } )
+                    } )                    
 
                     router.push( {name: 'Dashboard'} )
 
@@ -81,6 +81,11 @@ const Auth = {
                     router.push( {name: 'VerifyEmail'} )
 
                 }
+
+                store.commit( {
+                    type: 'system/SET_ATTEMPT',
+                    attempt: false
+                } )
 
             } )
 
@@ -101,9 +106,14 @@ const Auth = {
                         message: 'Verification email sent successfully!',
                     } )
 
+                    store.commit( {
+                        type: 'system/SET_ATTEMPT',
+                        attempt: false
+                    } )
+
                 }
 
-                if(res.data === 'verified') {
+                if(res?.data === 'verified') {
                     router.go()
                 }
 
@@ -135,8 +145,18 @@ const Auth = {
                     message: 'Registration is successful!',
                 } )
 
+                store.commit( {
+                    type: 'system/SET_ATTEMPT',
+                    attempt: false
+                } )
+
                 // Send Verification email
                 this.emailVerificationSend()
+
+                store.commit( {
+                    type: 'system/SET_VERIF_TIME',
+                    time: Date.now()
+                } )
 
                 // redirect to verification email page
                 router.push( {name: 'VerifyEmail'} )
@@ -150,11 +170,12 @@ const Auth = {
 
         if( store.getters['user/getToken'] ) return
 
-        const { email, password } = payload
+        const { email, password, remember } = payload
 
         API.post( '/login', {
             email,
             password,
+            remember,
         } ).then( res => {
 
             if( res?.status === 200 ) {
@@ -170,6 +191,11 @@ const Auth = {
                     message: 'Login is successful!',
                 } )
 
+                store.commit( {
+                    type: 'system/SET_ATTEMPT',
+                    attempt: false
+                } )
+
                 if( emailVerification() ) {
 
                     router.push( {name: 'Dashboard'} )
@@ -178,7 +204,7 @@ const Auth = {
 
                     router.push( {name: 'VerifyEmail'} )
 
-                }        
+                }                
 
             }
 

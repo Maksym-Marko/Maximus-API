@@ -3,46 +3,26 @@
     <div class="w-full max-w-md space-y-8">
       <div>
         <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign up to your account</h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Or
-          {{ ' ' }}
-          <router-link 
-            :to="{name:'Login'}"
-            class="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Login now
-          </router-link>
-        </p>
+        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Reset Password</h2>
+        
       </div>
-      <form class="mt-8 space-y-6" @submit.prevent="register">
+      <form class="mt-8 space-y-6" @submit.prevent="resetPassword">
         <div class="-space-y-px rounded-md shadow-sm">
+            
             <div>
-                <label for="name" class="sr-only">Your name</label>
-                <input
-                    id="name"
-                    type="text"
-                    v-model="formData.name"
-                    required="true"
-                    class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    :class="[errors.length>0 && !formData.name ? 'empty-field' : '']"
-                    placeholder="John Doe" 
-                />
-            </div>
-            <div>
-                <label for="email-address" class="sr-only">Email address</label>
+                <label for="email-address" class="sr-only">Your Email address</label>
                 <input
                     id="email-address"
                     type="email"
                     v-model="formData.email"
                     required="true"
-                    class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     :class="[errors.length>0 && !formData.email ? 'empty-field' : '']"
                     placeholder="Email address" 
                 />
             </div>
             <div>
-                <label for="password" class="sr-only">Password</label>
+                <label for="password" class="sr-only">New Password</label>
                 <input
                     id="password"
                     type="password"
@@ -74,7 +54,7 @@
             type="submit"
             class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            Register
+            Reset Password
           </button>
 
           <button
@@ -86,7 +66,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-400" aria-hidden="true" />
             </span>
-            Register
+            Reset Password
           </button>
 
         </div>
@@ -96,15 +76,18 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue'
+    import { onMounted, ref, computed } from 'vue'
     import store from '@/store'
+    import { useRoute, useRouter } from 'vue-router'
     import Auth from '@/services/Auth'
     import { LockClosedIcon } from '@heroicons/vue/20/solid'
 
     const attempt = computed( () => store.getters['system/getAttempt'] )
 
+    const router = useRouter()
+    const route = useRoute()
+
     const formData = ref( {
-        name: null,
         email: null,
         password: null,
         password_confirmation: null
@@ -112,30 +95,36 @@
 
     const errors = ref( [] )
 
-    const register = () => {
+    const resetPassword = () => {
 
-        errors.value = []
-
-        // validation
-        if( ! formData.value.name ) errors.value.push( 'Fill in name' )
         if( ! formData.value.email ) errors.value.push( 'Fill in email' )
         if( ! formData.value.password ) errors.value.push( 'Fill in password' )
         if( ! formData.value.password_confirmation ) errors.value.push( 'Confirm your password' )
-        if( 
-            formData.value.password && 
-            formData.value.password_confirmation &&
-            formData.value.password !== formData.value.password_confirmation
-        ) {
-            errors.value.push( 'Password and Password confirmation do NOT match' )
-        }
 
-        Auth.register( formData.value )
+        if( ! formData.value.email || ! formData.value.password || ! formData.value.password_confirmation ) return
 
         store.commit( {
           type: 'system/SET_ATTEMPT',
           attempt: true
         } )
+        
+        Auth.forgotPasswordCheck( {
+            email: formData.value.email,
+            password: formData.value.password,
+            password_confirmation: formData.value.password_confirmation,
+            token: route.query.token,
+        } )
 
     }
+
+    onMounted( () => {
+
+        if( typeof route.query.token === 'undefined' ) {
+
+            router.push( { name: 'notFound' } )
+
+        }
+
+    } )
 
 </script>
