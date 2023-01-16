@@ -22,7 +22,7 @@ class ForgotPasswordController extends Controller
 
         $app_url = config('app.url');
 
-        if( isset( $request['forgotPasswordUrl'] ) ) $app_url = $request['forgotPasswordUrl'];
+        if( isset( $request['resetPasswordUrl'] ) ) $app_url = $request['resetPasswordUrl'];
                
         $url = $app_url . '?token=' . Hash::make( $request->email );
        

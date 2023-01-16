@@ -36,7 +36,7 @@ const Auth = {
 
         API.post( '/forgot-password', {
             email,
-            forgotPasswordUrl: import.meta.env.VITE_RESET_PASSWORD_BASE_URL,
+            resetPasswordUrl: import.meta.env.VITE_RESET_PASSWORD_BASE_URL,
         } )
             .then( res => {
 
