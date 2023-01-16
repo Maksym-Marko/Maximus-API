@@ -4,8 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>MAXIMUS API</title>
 
+        <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/png" >
+        
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -16,7 +18,7 @@
        
         <div class="container max-w-screen-xl mx-auto mb-20">
 
-            <header class="mt-4 border-b-2 border-gray-300 pb-2">
+            <header class="mt-4 border-b-2 border-gray-300 py-5">
                 <div class="flex items-center">
                     <h1 class="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-slate-200">MAXIMUS API</h1>
                 </div>
@@ -263,19 +265,30 @@
 
             </div>
 
+            <!-- Get User Data -->
+            <div class="mb-6">
+                <h3 class="text-2xl mt-4" id="get_user_data">
+                    Get User Data:
+                </h3>
 
+                <div class="rounded-lg border-gray-300 bg-gray-100 p-4 my-2">                    
+                    <span class="text-gray-300">GET:</span> https://api.markomaksym.com.ua/api/user
+                </div>
 
+                <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
+                    To get user's data you must use an <b>authorized</b> GET request with Bearer Token generated after successful login request.
+                </p>
 
-
-
-
-
-
-
-
-
+            </div>
         
-        </div>            
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-600">
+            <div class="max-w-screen-xl mx-auto text-center text-base text-white py-10">
+                E-mail: support@markomaksym.com.ua | Copyright © 2023 | <a href="https://markomaksym.com.ua/">markomaksym.com.ua</a> 
+            </div>
+        </footer>
 
     </body>
 </html>
