@@ -79,3 +79,6 @@ To reset password you must handle reset password URL from user's email address, 
 `GET: https://api.markomaksym.com.ua/api/user`
 
 To get user's data you must use an **authorized** GET request with Bearer Token generated after successful login request.
+
+##### Video guide:
+[![Maximus API. Authentication for Web Applications](https://img.youtube.com/vi/A4qdZJFNWu8/0.jpg "Maximus API. Authentication for Web Applications")](https://www.youtube.com/watch?v=A4qdZJFNWu8 "Maximus API. Authentication for Web Applications")

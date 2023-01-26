@@ -283,6 +283,15 @@
         
         </div>
 
+        <div class="container max-w-screen-xl mx-auto mb-20">
+            <h3 class="text-2xl mt-4" id="get_user_data">
+                Video guide:
+            </h3><br>
+
+            <iframe width="100%" height="600" src="https://www.youtube.com/embed/A4qdZJFNWu8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+        </div>
+
         <div class="container max-w-screen-xl mx-auto mb-20 italic">
             <p>
                 If you want to configure the API and run it on your own host, please find the code here: 
