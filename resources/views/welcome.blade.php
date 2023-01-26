@@ -35,10 +35,10 @@
 
             <div>
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    Maximus API provides authentication, authorization for your web apps. Your users can sign in directly with a user name and password.
+                    Maximus API provides authentication, authorization for your web apps. Your users can sign in directly with a username and password.
                 </p>
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    There is a user data pull for authorized users. You as a developer can manage the user's data in your web application (use user name, email, id, created_at and updated_at for your purposes).
+                    There is a user data pull for authorized users. You as a developer can manage the user's data in your web application (use username, email, id, created_at and updated_at for your purposes).
                 </p>
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
                     User authorization through Maximus API based on API authentication using a random token assigned to each user of your application.
@@ -62,7 +62,7 @@
                     Due to user authorization, after successful authentication, the server response contains a token. This token must be saved by your application and used for each future request as the "Bearer Token".
                 </p>
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    The front-end part is fully under developer's responsibility, however you can use prebuilt starter kit for Vue.js 3 Single Page Application (SPA) - Maximus SPA (more details you can find here ====).
+                    The front-end part is fully under developer's responsibility, however you can use prebuilt starter kit for Vue.js 3 Single Page Application (SPA) - Maximus SPA (more details you can find here <a href="https://github.com/Maxim-us/Maximus-SPA" target="_blank" class="text-sky-500 hover:underline"><b>https://github.com/Maxim-us/Maximus-SPA</b></a>).
                 </p>                
 
             </div>
@@ -142,7 +142,7 @@
                 </div>
 
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    For sign out user, you must use an <b>authorized</b> POST request without any parameters:
+                    For sign out user, you must use an <b>authorized</b> POST request without any parameters.
                 </p>
             </div>
 
@@ -196,7 +196,7 @@
                 </ul>
 
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    "id" is an id of current user. "hash" is an automatically generated string from email verification URL (eg. http://domain.com/verify-email-check?id=24&hash=d1D/2aMqY5AVUNjRsaqsK.W56oYS5ltgnJUod3IgJVjKcfxBkJXPu).
+                    "id" is an id of the current user. "hash" is an automatically generated string from email verification URL (eg. http://domain.com/verify-email-check?id=24&hash=d1D/2aMqY5AVUNjRsaqsK.W56oYS5ltgnJUod3IgJVjKcfxBkJXPu).
                 </p>
 
             </div>
@@ -225,7 +225,7 @@
                 </ul>
 
                 <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
-                    "email" is an email of current user. "resetPasswordUrl" is an Base url of a page where user will be redirected from his/her email address (eg. http://domain.com/reset-password).
+                    "email" is an email of the current user. "resetPasswordUrl" is an Base url of a page where user will be redirected from his/her email address (eg. http://domain.com/reset-password).
                 </p>
 
             </div>
@@ -283,10 +283,18 @@
         
         </div>
 
+        <div class="container max-w-screen-xl mx-auto mb-20 italic">
+            <p>
+                If you want to configure the API and run it on your own host, please find the code here: 
+                <a href="https://github.com/Maxim-us/Laravel-Vue3-Breeze" target="_blank">https://github.com/Maxim-us/Laravel-Vue3-Breeze</a>
+            </p>
+            
+        </div>
+
         <!-- Footer -->
         <footer class="bg-gray-600">
             <div class="max-w-screen-xl mx-auto text-center text-base text-white py-10">
-                E-mail: support@markomaksym.com.ua | Copyright © 2023 | <a href="https://markomaksym.com.ua/">markomaksym.com.ua</a> 
+                E-mail: support@markomaksym.com.ua | Copyright © 2023 | <a href="https://markomaksym.com.ua/" target="_blank">markomaksym.com.ua</a> 
             </div>
         </footer>
 

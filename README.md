@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MAXIMUS API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## What is Maximus API?
+Maximus API provides authentication, authorization for your web apps. Your users can sign in directly with a username and password.
 
-## About Laravel
+There is a user data pull for authorized users. You as a developer can manage the user's data in your web application (use username, email, id, created_at and updated_at for your purposes).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+User authorization through Maximus API based on API authentication using a random token assigned to each user of your application.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Getting started with Maximus API?
+The Maximus API provides endpoint URLs for registration, authorization, email verification, password reset.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Due to user authorization, after successful authentication, the server response contains a token. This token must be saved by your application and used for each future request as the "Bearer Token".
 
-## Learning Laravel
+The front-end part is fully under developer's responsibility, however you can use prebuilt starter kit for Vue.js 3 Single Page Application (SPA) - Maximus SPA (more details you can find here https://github.com/Maxim-us/Maximus-SPA).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### There are several API URLs you should know about:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+##### Registration:
+`POST: https://api.markomaksym.com.ua/api/register`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+For user registration, you must use an **unauthorized** POST request with the following parameters:
+- name
+- email
+- password
+- password_confirmation
 
-## Laravel Sponsors
+##### Login:
+`POST: https://api.markomaksym.com.ua/api/login`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+For user login, you must use an **unauthorized** POST request with the following parameters:
+- email
+- password
+- remember
 
-### Premium Partners
+##### Sign out:
+`POST: https://api.markomaksym.com.ua/api/logout`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+For sign out user, you must use an **authorized** POST request without any parameters.
 
-## Contributing
+##### Email Verification (send url):
+`POST: https://api.markomaksym.com.ua/api/send-email-verification-url`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To send email verification URL to user's email address, you must use an **authorized** POST request with following:
+- verificationUrl
 
-## Code of Conduct
+"verificationUrl" is an Base url of a page where user will be redirected from his/her email address (eg. http://domain.com/verify-email-check).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+##### Email Verification (check url):
+`POST: https://api.markomaksym.com.ua/api/send-email-verification-check`
 
-## Security Vulnerabilities
+To check email verification URL from user's email address, you can use an **unauthorized** or an authorized POST request with following parameters:
+- id
+- hash
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+"id" is an id of the current user. "hash" is an automatically generated string from email verification URL (eg. http://domain.com/verify-email-check?id=24&hash=d1D/2aMqY5AVUNjRsaqsK.W56oYS5ltgnJUod3IgJVjKcfxBkJXPu).
 
-## License
+##### Forgot password:
+`POST: https://api.markomaksym.com.ua/api/forgot-password`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To send forgot password URL to user's email address, you must use an **authorized** POST request with following parameters:
+- email
+- resetPasswordUrl
+
+"email" is an email of the current user. "resetPasswordUrl" is an Base url of a page where user will be redirected from his/her email address (eg. http://domain.com/reset-password).
+
+##### Reset password:
+`POST: https://api.markomaksym.com.ua/api/reset-password`
+
+To reset password you must handle reset password URL from user's email address, using an **authorized** POST request with following parameters:
+- email
+- password
+- password_confirmation
+- token
+
+"token" is an automatically generated string in URL (eg. http://domain.com/reset-password?token=y10$oGbE99vXTLTeTC.k7QVgiOFvtmB1dLY4dXRnteLgTzRKNKYjfLQWS).
+
+##### Get User Data:
+`GET: https://api.markomaksym.com.ua/api/user`
+
+To get user's data you must use an **authorized** GET request with Bearer Token generated after successful login request.
