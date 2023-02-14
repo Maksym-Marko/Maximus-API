@@ -35,7 +35,9 @@ class ForgotPasswordController extends Controller
 
         $user->touch();
 
-        return 'success';
+        return response( [
+            'message' => 'success'
+        ] );
 
     }
 
@@ -74,10 +76,14 @@ class ForgotPasswordController extends Controller
 
         if( $reset ) {
             $user->touch();
-            return 'success';
+            return response( [
+                'message' => 'success'
+            ] );
         }
 
-        return 0;
+        return response( [
+            'message' => 'failed'
+        ] );
 
     }
 

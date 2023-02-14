@@ -31,7 +31,9 @@ class EmailVerificationController extends Controller
                 'url' => $url
             ] ) );
 
-        return 'success';
+        return response( [
+            'message' => 'success'
+        ] );
 
     }
 
